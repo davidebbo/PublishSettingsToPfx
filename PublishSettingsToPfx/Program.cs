@@ -15,7 +15,8 @@ namespace PublishSettingsToPfx
 
             string certString = GetCertStringFromPublishSettings(publishSettingsFile);
 
-            var cert = new X509Certificate2(Convert.FromBase64String(certString));
+            var cert = new X509Certificate2(
+                Convert.FromBase64String(certString), String.Empty, X509KeyStorageFlags.Exportable);
             
             byte[] certData = cert.Export(X509ContentType.Pfx, pfxPassword);
             File.WriteAllBytes(Path.ChangeExtension(publishSettingsFile, ".pfx"), certData);
